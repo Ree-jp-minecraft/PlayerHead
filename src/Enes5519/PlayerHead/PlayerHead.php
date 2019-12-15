@@ -106,11 +106,11 @@ class PlayerHead extends PluginBase implements Listener
 					$nbt = $entity->namedtag;
 					$result = $nbt->getCompoundTag('Skin');
 					if ($result) {
-						var_dump(3);
 						$bool = $result->offsetExists('Name');
 						if ($bool) {
 							$num = $result->getString('Name');
 							$this->addGet($p, $num);
+							$ev->setCancelled();
 						}
 					}
 				}
@@ -160,7 +160,7 @@ class PlayerHead extends PluginBase implements Listener
 
 			if (!$count)
 			{
-				$p->sendMessage(ReefAPI::BAD."プレゼントを全部見つけてるよ");
+				$p->sendMessage(ReefAPI::BAD."プレゼントは全部見つけてるよ");
 			}
 			if (isset($data[$num]))
 			{
