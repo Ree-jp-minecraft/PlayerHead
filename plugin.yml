@@ -14,4 +14,4 @@ permissions:
       playerhead.spawn:
         default: op
       playerhead.attack:
-        default: op
+        default: true
