@@ -44,6 +44,8 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 use Ree\reef\ReefAPI;
+use Ree\seichi\main;
+use Ree\seichi\skil\background\SnowBallEffect;
 
 class PlayerHead extends PluginBase implements Listener
 {
@@ -160,7 +162,7 @@ class PlayerHead extends PluginBase implements Listener
 
 			if (!$count)
 			{
-				$p->sendMessage(ReefAPI::BAD."プレゼントは全部見つけてるよ");
+				$p->sendMessage(ReefAPI::BAD."プレゼントは全部見つけてるよ(".$num.")");
 			}
 			if (isset($data[$num]))
 			{
@@ -171,6 +173,19 @@ class PlayerHead extends PluginBase implements Listener
 				if (!$count)
 				{
 					$p->sendMessage(ReefAPI::GOOD."プレゼントを全部見つけた おめでとう");
+					$pT = main::getpT($p->getName());
+					$p->sendMessage(ReefAPI::GOOD."全部見つけてくれたお礼にサンタさんからのクリスマスプレゼント!!!!");
+					$pT->s_breakEffect[] = SnowBallEffect::getClassName();
+					$p->sendMessage(ReefAPI::GOOD."エフェクト [雪玉] を所得しました");
+					ReefAPI::addSyogo($p ,"§f雪");
+					$p->sendMessage(ReefAPI::GOOD."称号 [§f雪§r] を所得しました");
+					ReefAPI::addSyogo($p ,"§aX§cmas");
+					$p->sendMessage(ReefAPI::GOOD."称号 [§aX§cmas§r] を所得しました");
+					$item = Item::get(Item::DIAMOND_SHOVEL);
+					$item->setCustomName("§fChristmasShovel_2019");
+					$item->setLore(["普通のシャベルだ!!"]);
+					$p->getInventory()->addItem($item);
+					$p->sendMessage(ReefAPI::GOOD."クリスマスシャベルを所得しました");
 				}else{
 					$p->sendMessage(ReefAPI::GOOD."プレゼントを見つけた あと".$count."個見つけよう");
 				}
