@@ -32,6 +32,8 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerDeathEvent;
+use pocketmine\item\enchantment\Enchantment;
+use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
 use pocketmine\math\Vector3;
@@ -183,9 +185,14 @@ class PlayerHead extends PluginBase implements Listener
 					$p->sendMessage(ReefAPI::GOOD."称号 [§aX§r] を所得しました");
 					ReefAPI::addSyogo($p ,"§cmas");
 					$p->sendMessage(ReefAPI::GOOD."称号 [§cmas§r] を所得しました");
+					ReefAPI::addSyogo($p ,"§cX");
+					$p->sendMessage(ReefAPI::GOOD."称号 [§cX§r] を所得しました");
+					ReefAPI::addSyogo($p ,"§amas");
+					$p->sendMessage(ReefAPI::GOOD."称号 [§amas§r] を所得しました");
 					$item = Item::get(Item::DIAMOND_SHOVEL);
-					$item->setCustomName("§fChristmasShovel_2019");
+					$item->setCustomName("§aChrist§cmas§bShovel_§92019§r");
 					$item->setLore(["普通のシャベルだ!!"]);
+					$item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment(Enchantment::EFFICIENCY), 100));
 					$p->getInventory()->addItem($item);
 					$p->sendMessage(ReefAPI::GOOD."クリスマスシャベルを所得しました");
 				}else{
