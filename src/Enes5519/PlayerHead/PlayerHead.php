@@ -179,8 +179,10 @@ class PlayerHead extends PluginBase implements Listener
 					$p->sendMessage(ReefAPI::GOOD."エフェクト [雪玉] を所得しました");
 					ReefAPI::addSyogo($p ,"§f雪");
 					$p->sendMessage(ReefAPI::GOOD."称号 [§f雪§r] を所得しました");
-					ReefAPI::addSyogo($p ,"§aX§cmas");
-					$p->sendMessage(ReefAPI::GOOD."称号 [§aX§cmas§r] を所得しました");
+					ReefAPI::addSyogo($p ,"§aX");
+					$p->sendMessage(ReefAPI::GOOD."称号 [§aX§r] を所得しました");
+					ReefAPI::addSyogo($p ,"§cmas");
+					$p->sendMessage(ReefAPI::GOOD."称号 [§cmas§r] を所得しました");
 					$item = Item::get(Item::DIAMOND_SHOVEL);
 					$item->setCustomName("§fChristmasShovel_2019");
 					$item->setLore(["普通のシャベルだ!!"]);
