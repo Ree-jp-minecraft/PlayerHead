@@ -162,11 +162,11 @@ class PlayerHead extends PluginBase implements Listener
 
 			if (!$count)
 			{
-				$p->sendMessage(ReefAPI::BAD."プレゼントは全部見つけてるよ(".$num.")");
+				$p->sendMessage(ReefAPI::BAD."プレゼントは全部見つけてるよ");
 			}
 			if (isset($data[$num]))
 			{
-				$p->sendMessage(ReefAPI::BAD."このプレゼントは見つけてるよ あと".$count."個見つけよう");
+				$p->sendMessage(ReefAPI::BAD."このプレゼントは見つけてるよ あと".$count."個見つけよう(このプレゼントは".$num."です)");
 			}else{
 				$count--;
 				$data[$num] = $num;
