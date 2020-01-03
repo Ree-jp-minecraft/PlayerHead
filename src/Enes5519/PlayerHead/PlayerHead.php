@@ -106,16 +106,10 @@ class PlayerHead extends PluginBase implements Listener
 			$entity = $ev->getEntity();
 			$p = $ev->getDamager();
 			if ($p instanceof Player) {
-				if (!$entity instanceof Player) {
-					$nbt = $entity->namedtag;
-					$result = $nbt->getCompoundTag('Skin');
-					if ($result) {
-						$bool = $result->offsetExists('Name');
-						if ($bool) {
-							$num = $result->getString('Name');
-							$this->addGet($p, $num);
-							$ev->setCancelled();
-						}
+				if ($entity instanceof HeadEntity) {
+					if (!$p->isOp())
+					{
+						$ev->setCancelled();
 					}
 				}
 			}
