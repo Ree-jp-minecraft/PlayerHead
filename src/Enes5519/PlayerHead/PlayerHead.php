@@ -74,7 +74,7 @@ class PlayerHead extends PluginBase implements Listener
 
         Entity::registerEntity(HeadEntity::class, true, ['PlayerHead']);
 
-        foreach (["りー", "レーマリ", "やもり", "うなぎ", "よっちゃん"] as $id) {
+        foreach (["りー", "レーマリ", "やもり", "うなぎ", "よっちゃん", "びーぼ"] as $id) {
             $item = $this->getChristmas($id);
             Item::addCreativeItem($item);
         }
@@ -158,12 +158,14 @@ class PlayerHead extends PluginBase implements Listener
      */
     private function addGet(Player $p, string $id): void
     {
+        if (!$p->isOp()) return;
+
         $n = $p->getName();
         $this->data->reload();
         if ($this->data->exists($n)) {
             $data = $this->data->get($n);
             $count = count($data);
-            $count = 5 - $count;
+            $count = 6 - $count;
 
             if (!$count) {
                 $p->sendMessage("プレゼントは全部見つけてるよ");
@@ -194,7 +196,7 @@ class PlayerHead extends PluginBase implements Listener
         } else {
             $data[$id] = $id;
             $p->sendMessage("§aガチャチケットを1枚受け取りました");
-            $p->sendMessage("あと4 個見つけよう");
+            $p->sendMessage("あと5 個見つけよう");
             GatyaManager::addTicket($p->getXuid(), SQLConst::TICKETS_NORMAL, 1);
         }
         $this->data->set($n, $data);
