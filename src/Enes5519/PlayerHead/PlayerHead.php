@@ -105,14 +105,16 @@ class PlayerHead extends PluginBase implements Listener
             $p = $ev->getDamager();
             if ($p instanceof Player) {
                 if ($entity instanceof HeadEntity) {
-                    $nbt = $entity->namedtag;
-                    $result = $nbt->getCompoundTag('Skin');
-                    if ($result) {
-                        $bool = $result->offsetExists('Name');
-                        if ($bool) {
-                            $num = $result->getString('Name');
-                            $this->addGet($p, $num);
-                            $ev->setCancelled();
+                    if ($p->isSurvival()) {
+                        $nbt = $entity->namedtag;
+                        $result = $nbt->getCompoundTag('Skin');
+                        if ($result) {
+                            $bool = $result->offsetExists('Name');
+                            if ($bool) {
+                                $num = $result->getString('Name');
+                                $this->addGet($p, $num);
+                                $ev->setCancelled();
+                            }
                         }
                     }
                     if (!$p->isOp()) {
@@ -152,25 +154,27 @@ class PlayerHead extends PluginBase implements Listener
 
     /**
      * @param Player $p
-     * @param string $num
+     * @param string $id
      */
-    private function addGet(Player $p, string $num): void
+    private function addGet(Player $p, string $id): void
     {
         $n = $p->getName();
         $this->data->reload();
         if ($this->data->exists($n)) {
             $data = $this->data->get($n);
             $count = count($data);
-            $count = 7 - $count;
+            $count = 5 - $count;
 
             if (!$count) {
                 $p->sendMessage("プレゼントは全部見つけてるよ");
+                return;
             }
-            if (isset($data[$num])) {
-                $p->sendMessage("このプレゼントは見つけてるよ あと" . $count . "個見つけよう(このプレゼントは" . $num . "です)");
+            if (isset($data[$id])) {
+                $p->sendMessage("このプレゼントは見つけてるよ あと" . $count . "個見つけよう(このプレゼントは" . $id . "です)");
+                return;
             } else {
                 $count--;
-                $data[$num] = $num;
+                $data[$id] = $id;
                 if (!$count) {
                     $p->sendMessage("§aプレゼントを全部見つけた おめでとう");
                     $p->sendMessage("全部見つけてくれたお礼にサンタさんからのクリスマスプレゼント!!!!");
@@ -178,7 +182,7 @@ class PlayerHead extends PluginBase implements Listener
                     $item = Item::get(Item::DIAMOND_SHOVEL, 100);
                     $item->setCustomName("§aChrist§cmas§bShovel §92021§r");
                     $item->setLore(["普通のシャベルだ!!"]);
-                    $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment(Enchantment::EFFICIENCY), 100));
+                    $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment(Enchantment::FLAME), 10));
                     $p->getInventory()->addItem($item);
                     $p->sendMessage("クリスマスシャベルを取得しました");
                 } else {
@@ -188,9 +192,9 @@ class PlayerHead extends PluginBase implements Listener
                 }
             }
         } else {
-            $data[$num] = $num;
+            $data[$id] = $id;
             $p->sendMessage("§aガチャチケットを1枚受け取りました");
-            $p->sendMessage("あと6 個見つけよう");
+            $p->sendMessage("あと4 個見つけよう");
             GatyaManager::addTicket($p->getXuid(), SQLConst::TICKETS_NORMAL, 1);
         }
         $this->data->set($n, $data);
