@@ -36,6 +36,7 @@ use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
+use pocketmine\item\ItemIds;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\ByteArrayTag;
 use pocketmine\nbt\tag\CompoundTag;
@@ -181,12 +182,17 @@ class PlayerHead extends PluginBase implements Listener
                     $p->sendMessage("§aプレゼントを全部見つけた おめでとう");
                     $p->sendMessage("全部見つけてくれたお礼にサンタさんからのクリスマスプレゼント!!!!");
 
-                    $item = Item::get(Item::DIAMOND_SHOVEL, 100);
+                    $item = Item::get(ItemIds::DIAMOND_SHOVEL);
                     $item->setCustomName("§aChrist§cmas§bShovel §92021§r");
                     $item->setLore(["普通のシャベルだ!!"]);
                     $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment(Enchantment::FLAME), 10));
                     $p->getInventory()->addItem($item);
                     $p->sendMessage("クリスマスシャベルを取得しました");
+
+                    /** @noinspection PhpUndefinedClassInspection */
+                    /** @noinspection PhpUndefinedNamespaceInspection */
+                    ree_jp\coral_reef\gatya\GatyaManager::addTicket($p->getXuid(), "christmas_2021_tickets", 3);
+                    $p->sendMessage("クリスマスガチャチケット×3枚を取得しました");
                 } else {
                     $p->sendMessage("§aガチャチケットを1枚受け取りました");
                     $p->sendMessage("あと$count 個見つけよう");
